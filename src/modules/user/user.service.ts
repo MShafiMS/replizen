@@ -17,11 +17,30 @@ const getUsers = async (): Promise<IUser[]> => {
 
 const getUser = async (id: string): Promise<IUser> => {
   const user = await User.findById(id);
-
   if (!user) {
     throw new Error(`User with id ${id} not found`);
   }
   return user;
 };
 
-export const UserService = { createUser, getUser, getUsers };
+const updateUser = async (id: string, user: IUser): Promise<IUser> => {
+  const options = { upsert: true };
+  const updateduser = await User.findByIdAndUpdate(id, user, options);
+  if (!updateduser) {
+    throw new Error(`User with id ${id} not found`);
+  }
+  return updateduser;
+};
+
+const deleteUser = async (id: string) => {
+  const deleteduser = await User.findByIdAndDelete(id);
+  return deleteduser;
+};
+
+export const UserService = {
+  createUser,
+  getUser,
+  getUsers,
+  updateUser,
+  deleteUser,
+};
