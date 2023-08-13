@@ -12,6 +12,17 @@ const userSchema = new Schema<IUser>(
     name: { type: String },
     profilePicture: { type: String },
     role: { type: String, required: true },
+    address: { type: String },
+    cart: [
+      {
+        productId: { type: String },
+      },
+    ],
+    order: [
+      {
+        orderId: { type: String },
+      },
+    ],
   },
   { timestamps: true }
 );
