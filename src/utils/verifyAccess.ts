@@ -1,27 +1,31 @@
-// import jwt from "jsonwebtoken";
-// import { NextApiRequest, NextApiResponse } from "next";
+import jwt from "jsonwebtoken";
+import { NextApiRequest, NextApiResponse } from "next";
 
-// const verifyAccess =
-//   (handler: (req: NextApiRequest, res: NextApiResponse) => void) =>
-//   (req: NextApiRequest, res: NextApiResponse) => {
-//     const authorizationToken = req.headers.authorization;
-//     if (!authorizationToken) {
-//       return res.status(401).json({ message: "UnAuthorized access" });
-//     }
+interface CustomNextApiRequest extends NextApiRequest {
+  decoded?: any;
+}
 
-//     const token = authorizationToken.split(" ")[1];
+const verifyAccess =
+  (handler: (req: CustomNextApiRequest, res: NextApiResponse) => void) =>
+  (req: CustomNextApiRequest, res: NextApiResponse) => {
+    const authorizationToken = req.headers.authorization;
+    if (!authorizationToken) {
+      return res.status(401).json({ message: "UnAuthorized access" });
+    }
 
-//     jwt.verify(
-//       token,
-//       process.env.SECRET_JWT_TOKEN as string,
-//       (err, decoded) => {
-//         if (err) {
-//           return res.status(403).json({ message: "Forbidden access" });
-//         }
-//         req.decoded = decoded;
-//         handler(req, res);
-//       }
-//     );
-//   };
+    const token = authorizationToken.split(" ")[1];
 
-// export default verifyAccess;
+    jwt.verify(
+      token,
+      process.env.NEXT_PUBLIC_SECRET_JWT_TOKEN as string,
+      (err, decoded) => {
+        if (err) {
+          return res.status(403).json({ message: "Forbidden access" });
+        }
+        req.decoded = decoded;
+        handler(req, res);
+      }
+    );
+  };
+
+export default verifyAccess;

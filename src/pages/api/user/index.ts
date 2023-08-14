@@ -1,11 +1,9 @@
 import { UserService } from "@/modules/user/user.service";
 import dbConnect from "@/utils/dbConnect";
+import verifyAccess from "@/utils/verifyAccess";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await dbConnect();
 
   if (req.method === "POST") {
@@ -13,7 +11,7 @@ export default async function handler(
       const newUser = await UserService.createUser(req.body);
       res.status(201).json(newUser);
     } catch (error) {
-      res.status(500).json({ error: "Error creating user" });
+      res.status(500).json({ message: "Error creating user", error });
     }
   } else if (req.method === "GET") {
     try {
@@ -25,4 +23,6 @@ export default async function handler(
   } else {
     res.status(405).json({ error: "Method not allowed" });
   }
-}
+};
+
+export default verifyAccess(handler);

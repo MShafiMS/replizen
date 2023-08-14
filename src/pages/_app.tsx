@@ -1,4 +1,5 @@
 import Nav from "@/components/Nav";
+import { AuthContextProvider } from "@/components/auth/AuthContext";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Inter } from "next/font/google";
@@ -11,9 +12,11 @@ const inter = Inter({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <div className={`container mx-auto ${inter.className}`}>
-      <Nav />
-      <Component {...pageProps} />
-    </div>
+    <AuthContextProvider>
+      <div className={`container mx-auto ${inter.className}`}>
+        <Nav />
+        <Component {...pageProps} />
+      </div>
+    </AuthContextProvider>
   );
 }

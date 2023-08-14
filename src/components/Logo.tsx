@@ -3,7 +3,7 @@ const Logo = ({ width }: { width?: string }) => {
     <div>
       <svg
         width={width || "200"}
-        height="auto"
+        // height="auto"
         viewBox="0 0 544 58"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

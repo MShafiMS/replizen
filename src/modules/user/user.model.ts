@@ -7,8 +7,8 @@ if (mongoose.models["User"]) {
 
 const userSchema = new Schema<IUser>(
   {
-    email: { type: String, unique: true },
-    phone: { type: String, unique: true },
+    email: { type: String },
+    phone: { type: String },
     name: { type: String },
     profilePicture: { type: String },
     role: { type: String, required: true },

@@ -1,3 +1,4 @@
+import jwt from "jsonwebtoken";
 import { Error } from "mongoose";
 import { IUser } from "./user.interface";
 import User from "./user.model";
@@ -5,6 +6,12 @@ import User from "./user.model";
 const createUser = async (user: IUser): Promise<IUser> => {
   if (!user.role) {
     user.role = "User";
+  }
+  if (!user.email) {
+    user.email = "";
+  }
+  if (!user.phone) {
+    user.phone = "";
   }
   const createduser = await User.create(user);
   return createduser;
@@ -37,10 +44,52 @@ const deleteUser = async (id: string) => {
   return deleteduser;
 };
 
+const loginPhone = async (phone: string) => {
+  const phoneUser = await User.findOne({ phone: phone });
+  const token = jwt.sign(
+    { phone: phone },
+    process.env.NEXT_PUBLIC_SECRET_JWT_TOKEN as string
+  );
+  if (phoneUser) {
+    return { success: true, phoneUser, token };
+  } else {
+    const user = { phone: phone, role: "User", email: "" };
+    const createdUser = await User.create(user);
+    return { success: true, createdUser, token };
+  }
+};
+
+const loginEmail = async (email: string) => {
+  const emailUser = await User.findOne({ email: email });
+  const token = jwt.sign(
+    { email: email },
+    process.env.NEXT_PUBLIC_SECRET_JWT_TOKEN as string
+  );
+  if (emailUser) {
+    return { success: true, emailUser, token };
+  } else {
+    const user = { email: email, role: "User", phone: "" };
+    const createdUser = await User.create(user);
+    return { success: true, createdUser, token };
+  }
+};
+
+const emailUser = async (email: string) => {
+  const user = await User.findOne({ email: email });
+  if (user) {
+    return { success: true, email };
+  } else {
+    return { success: false, message: "User not found" };
+  }
+};
+
 export const UserService = {
   createUser,
   getUser,
   getUsers,
   updateUser,
   deleteUser,
+  loginPhone,
+  loginEmail,
+  emailUser,
 };

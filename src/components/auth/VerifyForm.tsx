@@ -1,3 +1,4 @@
+import primaryAxios from "@/utils/primaryAxios";
 import { useEffect, useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
@@ -18,11 +19,21 @@ const VerifyForm = ({ confirmationResult, phone, close }: IProps) => {
   const handleSubmit = async () => {
     try {
       setIsLoading(true);
-      await confirmationResult.confirm(code).then((result: any) => {
-        let user = result.user;
-        console.log(user);
-        alert("User signed in successfully");
-      });
+      await confirmationResult
+        .confirm(code)
+        .then(async (userCredential: any) => {
+          if (userCredential) {
+            const { data } = await primaryAxios.post("user/login", {
+              phone: userCredential.user.phoneNumber,
+            });
+            if (data) {
+              console.log(data);
+            }
+            if (data.token) {
+              localStorage.setItem("authorizationToken", data.token);
+            }
+          }
+        });
     } catch (error) {
       console.error(error);
     }
