@@ -13,7 +13,7 @@ const inter = Inter({
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <AuthContextProvider>
-      <div className={`container mx-auto ${inter.className}`}>
+      <div className={inter.className}>
         <Nav />
         <Component {...pageProps} />
       </div>

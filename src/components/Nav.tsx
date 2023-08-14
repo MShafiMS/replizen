@@ -3,7 +3,7 @@ import { signOut } from "firebase/auth";
 import { Mukta } from "next/font/google";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
 import { RiShoppingCartFill } from "react-icons/ri";
 import Logo from "./Logo";
@@ -17,6 +17,14 @@ const mukta = Mukta({
 
 const Nav = () => {
   const [linkHovered, setLinkHovered] = useState(0);
+  const [nav, setNav] = useState(false);
+  const changeBackground = () => {
+    if (window.scrollY >= 66) {
+      setNav(true);
+    } else {
+      setNav(false);
+    }
+  };
 
   const { authState } = useContext(AuthContext);
 
@@ -28,9 +36,18 @@ const Nav = () => {
     { name: "about", path: "/about" },
   ];
 
+  useEffect(() => {
+    changeBackground();
+    window.addEventListener("scroll", changeBackground);
+  });
+
   return (
-    <div className="fixed top-0 left-0 w-full">
-      <div className="flex container mx-auto items-center justify-between py-4 px-6 text-black">
+    <div
+      className={`fixed top-0 left-0 w-full bg-white duration-700 transition-all ${
+        nav ? "bg-opacity-100" : "bg-opacity-0"
+      }`}
+    >
+      <div className="flex container mx-auto items-center justify-between py-2 px-6">
         <div className="flex items-center w-full justify-between">
           <Link href={"/"}>
             <Logo />
@@ -68,7 +85,7 @@ const Nav = () => {
               className="hover:text-blue-600 cursor-pointer absolute top-1/2 -translate-y-1/2 right-2"
             />
           </div>
-          <button className="p-2.5 rounded-full border border-white hover:border-gray-200 duration-300 hover:bg-gray-200/60">
+          <button className="p-2.5 rounded-full border border-white/10 hover:border-gray-200/20 duration-300 hover:bg-gray-200/10">
             <RiShoppingCartFill size={18} />
           </button>
           {authState === "authenticated" ? (
