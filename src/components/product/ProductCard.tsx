@@ -44,14 +44,16 @@ const ProductCard = ({ product }: IProducts) => {
         className="bg-black/5 h-48 object-cover object-center rounded-t-xl"
       />
       <div className="px-3 py-3 rounded-b-xl bg-gray-100">
-        <h1 className="text-lg font-medium hover:text-blue-950">
-          {product.name}
+        <h1 className="font-medium hover:text-blue-950">
+          {product.name.length <= 20
+            ? product.name
+            : `${product.name.slice(0, 20)}...`}
         </h1>
         <div>
-          <div className="mt-3">
+          <div className="mt-1">
             {product.discount ? (
               <div className="flex items-center gap-1">
-                <p className="text-[#e23939] font-semibold text-lg">
+                <p className="text-[#e23939] text-lg">
                   ৳ {((100 - product.discount) / 100) * product.price}
                 </p>
                 <p className="text-sm text-gray-500 line-through">
@@ -59,9 +61,7 @@ const ProductCard = ({ product }: IProducts) => {
                 </p>
               </div>
             ) : (
-              <p className="text-[#e23939] font-semibold text-lg">
-                ৳ {product.price}
-              </p>
+              <p className="text-[#e23939] text-lg">৳ {product.price}</p>
             )}
           </div>
           <div className="flex items-center gap-1">
