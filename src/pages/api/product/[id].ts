@@ -7,6 +7,15 @@ export default async function handler(
   res: NextApiResponse
 ) {
   await dbConnect();
+  res.setHeader("Access-Control-Allow-Origin", "https://replizen.vercel.app");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET,OPTIONS,PATCH,DELETE,POST,PUT"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+  );
   if (req.method === "GET") {
     const productId = req.query.id as string;
     try {
