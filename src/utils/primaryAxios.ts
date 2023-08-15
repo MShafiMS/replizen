@@ -3,7 +3,7 @@ import { signOut } from "firebase/auth";
 import auth from "./firebase.init";
 
 const primaryAxios = axios.create({
-  baseURL: "https://replizen.vercel.app/api", // http://localhost:3000/api/
+  baseURL: "http://localhost:3000/api/", // https://replizen.vercel.app/api
 });
 
 // request interceptor
@@ -27,10 +27,7 @@ primaryAxios.interceptors.response.use(
     return response;
   },
   function (error) {
-    if (
-      error.response &&
-      (error.response.status === 403 || error.response.status === 401)
-    ) {
+    if (error.response.status === 403 || error.response.status === 401) {
       signOut(auth);
       localStorage.removeItem("authorizationToken");
     }
