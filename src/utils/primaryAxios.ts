@@ -3,7 +3,7 @@ import { signOut } from "firebase/auth";
 import auth from "./firebase.init";
 
 const primaryAxios = axios.create({
-  baseURL: "http://localhost:3000/api/",
+  baseURL: "https://replizen.vercel.app/api", //http://localhost:3000/api/
 });
 
 // request interceptor
