@@ -83,6 +83,15 @@ const emailUser = async (email: string) => {
   }
 };
 
+const getUserByEmail = async (email: string) => {
+  const user = await User.findOne({ email: email });
+  return user;
+};
+const getUserByPhone = async (phone: string) => {
+  const user = await User.findOne({ phone: phone });
+  return user;
+};
+
 export const UserService = {
   createUser,
   getUser,
@@ -92,4 +101,6 @@ export const UserService = {
   loginPhone,
   loginEmail,
   emailUser,
+  getUserByEmail,
+  getUserByPhone,
 };

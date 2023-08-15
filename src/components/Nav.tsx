@@ -5,9 +5,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
-import { RiShoppingCartFill } from "react-icons/ri";
 import Logo from "./Logo";
 import { AuthContext } from "./auth/AuthContext";
+import ProductCart from "./product/ProductCart";
 
 const mukta = Mukta({
   weight: ["300", "400", "500", "700", "600"],
@@ -43,7 +43,7 @@ const Nav = () => {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full bg-white duration-700 transition-all ${
+      className={`fixed top-0 left-0 w-full bg-[#f0f0f0] duration-700 transition-all ${
         nav ? "bg-opacity-100" : "bg-opacity-0"
       }`}
     >
@@ -73,21 +73,19 @@ const Nav = () => {
             ))}
           </ul>
         </div>
-        <div className="ml-28 flex gap-5 items-center">
+        <div className="ml-28 flex gap-4 items-center">
           <div className="relative">
             <input
               type="text"
               placeholder="Search..."
-              className="w-80 border font-thin py-1.5 px-2.5 rounded-md border-gray-200 outline-none text-sm"
+              className="w-72 border font-thin py-1.5 px-2.5 rounded-md border-gray-200 outline-none text-sm"
             />
             <BiSearchAlt
               size={20}
               className="hover:text-blue-600 cursor-pointer absolute top-1/2 -translate-y-1/2 right-2"
             />
           </div>
-          <button className="p-2.5 rounded-full border border-white/10 hover:border-gray-200/20 duration-300 hover:bg-gray-200/10">
-            <RiShoppingCartFill size={18} />
-          </button>
+          <ProductCart />
           {authState === "authenticated" ? (
             <button
               onClick={() => signOut(auth)}

@@ -23,8 +23,8 @@ const VerifyForm = ({ confirmationResult, phone, close }: IProps) => {
         .confirm(code)
         .then(async (userCredential: any) => {
           if (userCredential) {
-            const { data } = await primaryAxios.post("user/login", {
-              phone: userCredential.user.phoneNumber,
+            const { data } = await primaryAxios.put("user/login", {
+              phone: userCredential.user.phoneNumber.slice(1),
             });
             if (data) {
               console.log(data);

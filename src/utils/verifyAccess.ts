@@ -23,9 +23,8 @@ const verifyAccess =
           return res.status(403).json({ message: "Forbidden access" });
         }
         req.decoded = decoded;
-        handler(req, res);
+        handler(req, res); // Call the handler to continue processing
       }
     );
   };
-
 export default verifyAccess;

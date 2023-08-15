@@ -1,4 +1,5 @@
-export interface IProduct {
+export type Product = {
+  _id: string;
   name: string;
   description: string;
   price: number;
@@ -7,10 +8,11 @@ export interface IProduct {
   category: string;
   stockQuantity: number;
   reviews?: Review[];
-}
+};
 
-interface Review {
+export type Review = {
+  id: string;
   userId: string;
   rating: number;
   comment: string;
-}
+};

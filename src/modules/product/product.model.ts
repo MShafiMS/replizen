@@ -16,7 +16,6 @@ const productSchema = new Schema<IProduct>(
     stockQuantity: { type: Number, required: true },
     reviews: [
       {
-        id: { type: String },
         userId: { type: String },
         rating: { type: Number },
         comment: { type: String },
