@@ -43,6 +43,14 @@ const CartItem = ({ productId }: { productId: string }) => {
     fetchData();
   }, [productId]);
 
+  if (!product) {
+    return (
+      <div className="rounded-lg w-full h-20 bg-gray-200/80 flex justify-center items-center">
+        <RiLoader4Fill size={24} className="animate-spin" />
+      </div>
+    );
+  }
+
   return (
     <div className="rounded-lg w-full h-20 bg-gray-200/80 flex justify-between items-center">
       <div className="flex gap-2">

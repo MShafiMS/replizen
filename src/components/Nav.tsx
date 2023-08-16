@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
+import { CgProfile } from "react-icons/cg";
+import { IoLogOut } from "react-icons/io5";
 import Logo from "./Logo";
 import { AuthContext } from "./auth/AuthContext";
 import ProductCart from "./product/ProductCart";
@@ -73,7 +75,7 @@ const Nav = () => {
             ))}
           </ul>
         </div>
-        <div className="ml-28 flex gap-4 items-center">
+        <div className="ml-28 flex gap-1 items-center">
           <div className="relative">
             <input
               type="text"
@@ -87,12 +89,22 @@ const Nav = () => {
           </div>
           <ProductCart />
           {authState === "authenticated" ? (
-            <button
-              onClick={() => signOut(auth)}
-              className="px-5 py-1 bg-gradient-to-l from-[#7e2d3f] via-[#903131] to-[#ec4a4a] hover:bg-gradient-to-r transition-all bg-pos-0 hover:bg-pos-100 duration-500 bg-size-200 text-white uppercase rounded"
-            >
-              Logout
-            </button>
+            <>
+              <Link
+                href={"/profile"}
+                title="Profile"
+                className="p-2 rounded-full hover:bg-blue-700/30 text-gray-800 duration-500 relative"
+              >
+                <CgProfile size={20} />
+              </Link>
+              <button
+                title="Logout"
+                onClick={() => signOut(auth)}
+                className="p-2 rounded-full hover:bg-red-700/30 text-gray-800 duration-500 relative"
+              >
+                <IoLogOut size={20} />
+              </button>
+            </>
           ) : (
             <Link
               href={"/auth"}
