@@ -23,7 +23,7 @@ const verifyAccess =
         process.env.NEXT_PUBLIC_SECRET_JWT_TOKEN as string,
         (err, decoded) => {
           if (err) {
-            return res.status(403).json({ message: "Forbidden access" });
+            return res.status(403).json({ message: "Forbidden access", err });
           }
           req.decoded = decoded;
           handler(req, res).catch((error) => {
