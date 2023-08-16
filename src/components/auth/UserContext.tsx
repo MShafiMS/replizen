@@ -81,7 +81,7 @@ export function UserContextProvider(
     } else {
       router.push("/auth");
     }
-    refetch();
+    await fetchUser();
     setCartLoading("");
   };
 
@@ -93,6 +93,7 @@ export function UserContextProvider(
           setCurrentUser(user);
         } else {
           setAuthState("unauthenticated");
+          refetch();
         }
       });
     };

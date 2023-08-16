@@ -10,7 +10,7 @@ import CartItem from "./CartItem";
 
 const ProductCart = () => {
   const [isShwoCart, setIsShowCart] = useState(false);
-  const { authState, user, cartItems } = useContext(UserContext);
+  const { authState, cartItems } = useContext(UserContext);
   const router = useRouter();
 
   return (
@@ -26,9 +26,9 @@ const ProductCart = () => {
         className="p-2 rounded-full hover:bg-gray-700/30 text-gray-800 duration-500 relative"
       >
         <RiShoppingCartFill size={18} />
-        {user?.cart?.length ? (
+        {cartItems.length ? (
           <div className="absolute text-[10px] flex items-center justify-center top-0 right-0 bg-red-600 text-white w-[14px] h-[14px] rounded-full">
-            {user?.cart?.length <= 9 ? user?.cart?.length : "9+"}
+            {cartItems.length <= 9 ? cartItems.length : "9+"}
           </div>
         ) : null}
       </button>
