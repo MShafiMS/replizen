@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <main className={inter.className}>
       <Banner />
-      <Store title="Leatest Products!" />
+      <Store title="Leatest Products!" className="bg-white" />
     </main>
   );
 }

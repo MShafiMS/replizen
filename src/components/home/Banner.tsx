@@ -14,7 +14,7 @@ const gloria = Gloria_Hallelujah({
 const Banner = () => {
   return (
     <div className="h-screen bg-[url(https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80)] bg-cover bg-center bg-fixed flex items-end">
-      <div className="pb-12 w-full bg-white">
+      <div className="pb-12 w-full bg-[#e2dede]">
         <div className="container mx-auto flex">
           <div
             className={`w-full flex gap-6 justify-center -mt-16 ${rubikwetpaint.className}`}
