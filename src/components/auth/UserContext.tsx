@@ -2,6 +2,7 @@ import useProducts from "@/hooks/useProducts";
 import { Product } from "@/types";
 import auth from "@/utils/firebase.init";
 import primaryAxios from "@/utils/primaryAxios";
+import { useRouter } from "next/router";
 import React, { PropsWithChildren, useEffect, useState } from "react";
 
 type AuthState = "loading" | "authenticated" | "unauthenticated";
@@ -10,7 +11,9 @@ interface IValue {
   authState: AuthState;
   user: any;
   isLoading: boolean;
+  cartLoading: string;
   refetch: () => void;
+  addToCart: (productId: string) => void;
   cartItems: Product[];
 }
 
@@ -18,7 +21,9 @@ export const UserContext = React.createContext<IValue>({
   authState: "loading",
   user: null,
   isLoading: false,
+  cartLoading: "",
   refetch: () => {},
+  addToCart: () => {},
   cartItems: [],
 });
 
@@ -31,7 +36,9 @@ export function UserContextProvider(
   const [cartItems, setCartItems] = useState<Product[]>([]);
   const [currentUser, setCurrentUser] = useState<any>();
   const [isLoading, setIsLoading] = useState(false);
+  const [cartLoading, setCartLoading] = useState("");
   const { getProduct } = useProducts();
+  const router = useRouter();
 
   const fetchUser = async () => {
     setIsLoading(true);
@@ -55,6 +62,27 @@ export function UserContextProvider(
 
   const refetch = async () => {
     await fetchUser();
+  };
+
+  const addToCart = async (productId: string) => {
+    setCartLoading(productId);
+    if (authState === "authenticated") {
+      try {
+        const updatedCart = user?.cart
+          ? [...user.cart, { productId }]
+          : [{ productId }];
+        await primaryAxios.put(`user/${user?._id}`, {
+          ...user,
+          cart: updatedCart,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      router.push("/auth");
+    }
+    refetch();
+    setCartLoading("");
   };
 
   useEffect(() => {
@@ -117,7 +145,15 @@ export function UserContextProvider(
 
   return (
     <UserContext.Provider
-      value={{ authState, user, isLoading, refetch, cartItems }}
+      value={{
+        authState,
+        user,
+        isLoading,
+        refetch,
+        cartItems,
+        addToCart,
+        cartLoading,
+      }}
     >
       {children}
     </UserContext.Provider>

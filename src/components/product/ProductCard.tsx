@@ -1,9 +1,7 @@
 import { Product } from "@/types";
-import primaryAxios from "@/utils/primaryAxios";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { RiLoader4Fill, RiShoppingCartFill } from "react-icons/ri";
 import { UserContext } from "../auth/UserContext";
 import Rating from "./Rating";
@@ -13,26 +11,7 @@ interface IProducts {
 }
 
 const ProductCard = ({ product }: IProducts) => {
-  const { authState, user, refetch } = useContext(UserContext);
-  const [cartLoading, setCartLoading] = useState("");
-  const router = useRouter();
-
-  const addToCart = async (productId: string) => {
-    setCartLoading(productId);
-    try {
-      const updatedCart = user?.cart
-        ? [...user.cart, { productId }]
-        : [{ productId }];
-      await primaryAxios.put(`user/${user?._id}`, {
-        ...user,
-        cart: updatedCart,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-    refetch();
-    setCartLoading("");
-  };
+  const { addToCart, cartLoading } = useContext(UserContext);
 
   return (
     <div className="w-56 rounded-xl duration-100 hover:shadow-lg">
@@ -71,13 +50,7 @@ const ProductCard = ({ product }: IProducts) => {
         </div>
         <div className="mt-3 flex justify-between items-center">
           <button
-            onClick={() => {
-              if (authState === "authenticated") {
-                addToCart(product._id);
-              } else {
-                router.push("/auth");
-              }
-            }}
+            onClick={() => addToCart(product._id)}
             disabled={cartLoading === product._id}
             title="Add to cart"
             className="p-2 rounded border-2 border-gray-700 hover:bg-gray-700 text-gray-800 hover:text-gray-200 duration-500 hover:bg-gray-200/10"
