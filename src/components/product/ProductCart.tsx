@@ -1,13 +1,16 @@
+import { Product } from "@/types";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import { MdOutlineShoppingCartCheckout } from "react-icons/md";
 import { RiShoppingCartFill } from "react-icons/ri";
-import { AuthContext } from "../auth/AuthContext";
+import { UserContext } from "../auth/UserContext";
 import CartItem from "./CartItem";
 
 const ProductCart = () => {
   const [isShwoCart, setIsShowCart] = useState(false);
-  const { authState, user } = useContext(AuthContext);
+  const { authState, user, cartItems } = useContext(UserContext);
   const router = useRouter();
 
   return (
@@ -42,10 +45,18 @@ const ProductCart = () => {
               <AiOutlineClose size={18} />
             </button>
           </div>
-          <div className="space-y-3 overflow-y-auto px-3 py-4 h-full">
-            {user?.cart.map((item: { productId: string }, idx: number) => (
-              <CartItem key={idx} productId={item?.productId} />
+          <div className="space-y-3 overflow-y-auto px-3 py-4 h-full pb-28">
+            {cartItems?.map((product: Product) => (
+              <CartItem key={product?._id} product={product} />
             ))}
+          </div>
+          <div className="w-full absolute z-40 px-3 py-2 bottom-0 right-0 h-fit bg-gray-300">
+            <Link
+              href="/store/checkout"
+              className="px-5 py-1.5 w-full bg-gray-800 hover:bg-opacity-90 text-white uppercase rounded text-center flex items-center justify-center gap-2"
+            >
+              Checkout Now <MdOutlineShoppingCartCheckout size={20} />
+            </Link>
           </div>
         </div>
       )}

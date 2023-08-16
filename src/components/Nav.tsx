@@ -8,7 +8,7 @@ import { BiSearchAlt } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import { IoLogOut } from "react-icons/io5";
 import Logo from "./Logo";
-import { AuthContext } from "./auth/AuthContext";
+import { UserContext } from "./auth/UserContext";
 import ProductCart from "./product/ProductCart";
 
 const mukta = Mukta({
@@ -28,7 +28,7 @@ const Nav = () => {
     }
   };
 
-  const { authState } = useContext(AuthContext);
+  const { authState } = useContext(UserContext);
 
   const router = useRouter();
   const links = [
@@ -45,7 +45,7 @@ const Nav = () => {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full bg-[#f0f0f0] duration-700 transition-all ${
+      className={`fixed z-20 top-0 left-0 w-full bg-[#f0f0f0] duration-700 transition-all ${
         nav ? "bg-opacity-100" : "bg-opacity-0"
       }`}
     >

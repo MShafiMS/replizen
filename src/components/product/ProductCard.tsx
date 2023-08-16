@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 import { RiLoader4Fill, RiShoppingCartFill } from "react-icons/ri";
-import { AuthContext } from "../auth/AuthContext";
+import { UserContext } from "../auth/UserContext";
 import Rating from "./Rating";
 
 interface IProducts {
@@ -13,7 +13,7 @@ interface IProducts {
 }
 
 const ProductCard = ({ product }: IProducts) => {
-  const { authState, user, refetch } = useContext(AuthContext);
+  const { authState, user, refetch } = useContext(UserContext);
   const [cartLoading, setCartLoading] = useState("");
   const router = useRouter();
 

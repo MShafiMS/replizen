@@ -1,3 +1,5 @@
+import useProducts from "@/hooks/useProducts";
+import { Product } from "@/types";
 import auth from "@/utils/firebase.init";
 import primaryAxios from "@/utils/primaryAxios";
 import React, { PropsWithChildren, useEffect, useState } from "react";
@@ -9,23 +11,27 @@ interface IValue {
   user: any;
   isLoading: boolean;
   refetch: () => void;
+  cartItems: Product[];
 }
 
-export const AuthContext = React.createContext<IValue>({
+export const UserContext = React.createContext<IValue>({
   authState: "loading",
   user: null,
   isLoading: false,
   refetch: () => {},
+  cartItems: [],
 });
 
-export function AuthContextProvider(
+export function UserContextProvider(
   props: PropsWithChildren<Record<string, unknown>>
 ) {
   const { children } = props;
   const [authState, setAuthState] = useState<AuthState>("loading");
   const [user, setUser] = useState<any>();
+  const [cartItems, setCartItems] = useState<Product[]>([]);
   const [currentUser, setCurrentUser] = useState<any>();
   const [isLoading, setIsLoading] = useState(false);
+  const { getProduct } = useProducts();
 
   const fetchUser = async () => {
     setIsLoading(true);
@@ -67,6 +73,24 @@ export function AuthContextProvider(
   }, []);
 
   useEffect(() => {
+    const cart = user?.cart || [];
+    const fetchCartProducts = async () => {
+      const cartProducts = await Promise.all(
+        cart.map(async (item: any) => {
+          const product = await getProduct(item?.productId);
+          return product;
+        })
+      );
+      if (cartProducts) {
+        setCartItems(cartProducts);
+      }
+    };
+    if (user) {
+      fetchCartProducts();
+    }
+  }, [user]);
+
+  useEffect(() => {
     const fetchCurrentUser = async () => {
       setIsLoading(true);
       if (currentUser?.email) {
@@ -92,8 +116,10 @@ export function AuthContextProvider(
   }, [currentUser]);
 
   return (
-    <AuthContext.Provider value={{ authState, user, isLoading, refetch }}>
+    <UserContext.Provider
+      value={{ authState, user, isLoading, refetch, cartItems }}
+    >
       {children}
-    </AuthContext.Provider>
+    </UserContext.Provider>
   );
 }

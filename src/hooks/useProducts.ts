@@ -17,10 +17,21 @@ const useProducts = () => {
     fetchProducts();
   };
 
+  const getProduct = async (productId: string) => {
+    try {
+      const { data } = await primaryAxios.get(`product/${productId}`);
+      if (data) {
+        return data;
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   useEffect(() => {
     fetchProducts();
   }, []);
-  return { products, isLoading, refetch };
+  return { products, isLoading, refetch, getProduct };
 };
 
 export default useProducts;

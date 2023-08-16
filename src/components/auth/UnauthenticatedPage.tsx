@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
 import { PropsWithChildren, useContext, useEffect } from "react";
-import { AuthContext } from "./AuthContext";
+import { UserContext } from "./UserContext";
 
 export default function UnauthenticatedPage(
   props: PropsWithChildren<Record<string, unknown>>
 ) {
   const router = useRouter();
-  const { authState } = useContext(AuthContext);
+  const { authState } = useContext(UserContext);
   const { children } = props;
 
   useEffect(() => {

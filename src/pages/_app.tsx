@@ -1,5 +1,6 @@
+import Footer from "@/components/Footer";
 import Nav from "@/components/Nav";
-import { AuthContextProvider } from "@/components/auth/AuthContext";
+import { UserContextProvider } from "@/components/auth/UserContext";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { M_PLUS_Rounded_1c } from "next/font/google";
@@ -12,11 +13,12 @@ const mPlusRounded1c = M_PLUS_Rounded_1c({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <AuthContextProvider>
+    <UserContextProvider>
       <div className={mPlusRounded1c.className}>
         <Nav />
         <Component {...pageProps} />
+        <Footer />
       </div>
-    </AuthContextProvider>
+    </UserContextProvider>
   );
 }

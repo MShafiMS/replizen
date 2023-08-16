@@ -1,21 +1,20 @@
 import { Product } from "@/types";
 import primaryAxios from "@/utils/primaryAxios";
 import Image from "next/image";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { RiLoader4Fill } from "react-icons/ri";
-import { AuthContext } from "../auth/AuthContext";
+import { UserContext } from "../auth/UserContext";
 
-const CartItem = ({ productId }: { productId: string }) => {
-  const [product, setProduct] = useState<Product>();
+const CartItem = ({ product }: { product: Product }) => {
   const [cartLoading, setCartLoading] = useState(false);
-  const { authState, user, refetch } = useContext(AuthContext);
+  const { user, refetch } = useContext(UserContext);
 
   const removeFromCart = async () => {
     setCartLoading(true);
     try {
       const updatedCart = user?.cart?.filter(
-        (item: { productId: string }) => item.productId !== productId
+        (item: { productId: string }) => item.productId !== product._id
       );
       await primaryAxios.put(`user/${user?._id}`, {
         ...user,
@@ -28,37 +27,22 @@ const CartItem = ({ productId }: { productId: string }) => {
     setCartLoading(false);
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await primaryAxios.get(`product/${productId}`);
-        if (data) {
-          setProduct(data);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [productId]);
-
   if (!product) {
     return (
-      <div className="rounded-lg w-full h-20 bg-gray-200/80 flex justify-center items-center">
+      <div className="rounded-lg w-full h-16 bg-gray-200/80 flex justify-center items-center">
         <RiLoader4Fill size={24} className="animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="rounded-lg w-full h-20 bg-gray-200/80 flex justify-between items-center">
+    <div className="rounded-lg w-full h-16 bg-gray-200/80 flex justify-between items-center">
       <div className="flex gap-2">
         <Image
           src={product?.imageUrl as string}
           width={400}
           height={400}
-          className="w-24 h-20 object-cover object-center rounded-l-lg"
+          className="w-24 h-16 object-cover object-center rounded-l-lg"
           alt="ne"
         />
         <div className="mt-1">
@@ -81,7 +65,7 @@ const CartItem = ({ productId }: { productId: string }) => {
       </div>
       <button
         onClick={() => removeFromCart()}
-        className="p-3 mr-3 h-fit bg-gray-300/70 rounded hover:bg-red-300 duration-200"
+        className="p-2 mr-3 h-fit bg-gray-300/70 rounded hover:bg-blue-600/30 duration-200"
       >
         {!cartLoading ? (
           <AiOutlineClose size={20} />
