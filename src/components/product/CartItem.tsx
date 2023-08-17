@@ -14,7 +14,7 @@ const CartItem = ({ product }: { product: Product }) => {
     setCartLoading(true);
     try {
       const updatedCart = user?.cart?.filter(
-        (item: { productId: string }) => item.productId !== product._id
+        (item: { _id: string }) => item._id !== product.cartId
       );
       await primaryAxios.put(`user/${user?._id}`, {
         ...user,

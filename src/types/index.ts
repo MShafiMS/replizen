@@ -6,6 +6,7 @@ export type Product = {
   discount?: number;
   imageUrl: string;
   category: string;
+  cartId?: string;
   stockQuantity: number;
   reviews?: Review[];
 };

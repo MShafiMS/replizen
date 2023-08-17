@@ -109,7 +109,7 @@ export function UserContextProvider(
       const cartProducts = await Promise.all(
         cart.map(async (item: any) => {
           const product = await getProduct(item?.productId);
-          return product;
+          return { ...product, cartId: item?._id };
         })
       );
       if (cartProducts) {
