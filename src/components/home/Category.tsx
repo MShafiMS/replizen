@@ -12,7 +12,7 @@ const Category = () => {
             <div className="relative group flex justify-center items-center h-full w-full">
               <img
                 className="object-center object-cover h-full w-full"
-                src="https://i.ibb.co/ThPFmzv/omid-armin-m-VSb6-PFk-VXw-unsplash-1-1.png"
+                src="https://images.unsplash.com/photo-1416339698674-4f118dd3388b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=436&q=80"
                 alt="girl-image"
               />
               <button className="dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 bottom-4 z-10 absolute text-base font-medium leading-none text-gray-800 py-3 w-36 bg-white">

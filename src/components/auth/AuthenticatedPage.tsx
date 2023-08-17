@@ -11,7 +11,7 @@ export default function AuthenticatedPage(
 
   useEffect(() => {
     if (authState === "unauthenticated") {
-      router.replace("/auth");
+      router.push({ pathname: "/auth", query: { pathName: router.asPath } });
     }
   }, [authState, router]);
 

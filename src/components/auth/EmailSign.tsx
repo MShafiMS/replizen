@@ -106,7 +106,7 @@ const EmailSign = ({ email, close, emailType }: IProps) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full flex flex-col items-start justify-center h-full"
+      className="w-full flex flex-col lg:items-start items-center justify-center h-full"
     >
       <button onClick={close} className="mb-6 text-2xl">
         <MdOutlineKeyboardBackspace />

@@ -28,7 +28,7 @@ const Nav = () => {
     }
   };
 
-  const { authState } = useContext(UserContext);
+  const { authState, refetch } = useContext(UserContext);
 
   const router = useRouter();
   const links = [
@@ -49,7 +49,7 @@ const Nav = () => {
         nav ? "bg-opacity-100" : "bg-opacity-0"
       }`}
     >
-      <div className="flex container mx-auto items-center justify-between py-2 px-6">
+      <div className="lg:flex hidden container mx-auto items-center justify-between py-2 px-6">
         <div className="flex items-center w-full justify-between">
           <Link href={"/"}>
             <Logo />
@@ -99,7 +99,10 @@ const Nav = () => {
               </Link>
               <button
                 title="Logout"
-                onClick={() => signOut(auth)}
+                onClick={() => {
+                  signOut(auth);
+                  refetch();
+                }}
                 className="p-2 rounded-full hover:bg-red-700/30 text-gray-800 duration-500 relative"
               >
                 <IoLogOut size={20} />

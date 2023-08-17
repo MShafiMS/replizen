@@ -3,9 +3,11 @@ import Rating from "@/components/product/Rating";
 import useProducts from "@/hooks/useProducts";
 import { Product } from "@/types";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
-import { RiLoader4Fill } from "react-icons/ri";
+import { FaShippingFast } from "react-icons/fa";
+import { RiLoader4Fill, RiShoppingCartFill } from "react-icons/ri";
 
 const ProductDetails = () => {
   const [product, setProduct] = useState<Product>();
@@ -50,17 +52,29 @@ const ProductDetails = () => {
             <p className=" font-semibold lg:text-2xl text-xl lg:leading-6 leading-5 mt-6 ">
               ৳ {product?.price}
             </p>
-            <button
-              onClick={() => addToCart(productId)}
-              disabled={cartLoading === productId}
-              className="focus:outline-none focus:ring-2 hover:bg-black focus:ring-offset-2 focus:ring-gray-800 font-medium text-lg leading-4 text-white bg-gray-800 w-full py-4 lg:mt-12 mt-6"
-            >
-              {cartLoading === productId ? (
-                <RiLoader4Fill className="animate-spin mx-auto text-2xl" />
-              ) : (
-                "Add to Cart"
-              )}
-            </button>
+            <div className="flex gap-4">
+              <Link
+                href={`/store/checkout/${product?._id}`}
+                className="focus:outline-none focus:ring-2 hover:bg-black focus:ring-offset-2 focus:ring-gray-800 font-medium text-lg leading-4 text-white bg-gray-800 w-full py-4 lg:mt-12 mt-6"
+              >
+                <p className="flex items-center justify-center gap-3">
+                  Order Now <FaShippingFast size={20} />
+                </p>
+              </Link>
+              <button
+                onClick={() => addToCart(productId)}
+                disabled={cartLoading === productId}
+                className="focus:outline-none focus:ring-2 hover:bg-black focus:ring-offset-2 focus:ring-gray-800 font-medium text-lg leading-4 text-white bg-gray-800 w-full py-4 lg:mt-12 mt-6"
+              >
+                {cartLoading === productId ? (
+                  <RiLoader4Fill className="animate-spin mx-auto text-2xl" />
+                ) : (
+                  <p className="flex items-center justify-center gap-3">
+                    Add to Cart <RiShoppingCartFill size={20} />
+                  </p>
+                )}
+              </button>
+            </div>
           </div>
 
           {/* <!-- Preview Images Div For larger Screen--> */}

@@ -100,7 +100,7 @@ const Login = () => {
   return (
     <UnauthenticatedPage>
       <div className={comforta.className}>
-        <div className="pt-24 pb-10 px-14 w-full h-screen flex justify-center">
+        <div className="pt-24 pb-10 lg:px-14 px-4 w-full h-[60vh] lg:h-screen flex lg:flex-row flex-col justify-center">
           {isMethod ? (
             <>
               {isMethod === "phone" && (
@@ -121,7 +121,7 @@ const Login = () => {
           ) : (
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="w-full flex flex-col items-start justify-center h-full"
+              className="w-full flex flex-col lg:items-start items-center justify-center h-full"
             >
               <div className="mb-6">
                 <p className="text-xl font-bold mb-3">
@@ -175,7 +175,7 @@ const Login = () => {
               </button>
             </form>
           )}
-          <div className="w-full h-full bg-[url(https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80)] bg-cover bg-center rounded-3xl">
+          <div className="w-full h-full lg:block hidden bg-[url(https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80)] bg-cover bg-center rounded-3xl">
             <div
               className={`bg-black/40 w-full h-full flex flex-col justify-end items-center text-gray-200 rounded-3xl px-8 ${comforta.className}`}
             >

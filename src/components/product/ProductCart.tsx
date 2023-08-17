@@ -51,12 +51,21 @@ const ProductCart = () => {
             ))}
           </div>
           <div className="w-full absolute z-40 px-3 py-2 bottom-0 right-0 h-fit bg-gray-300">
-            <Link
-              href="/store/checkout"
-              className="px-5 py-1.5 w-full bg-gray-800 hover:bg-opacity-90 text-white uppercase rounded text-center flex items-center justify-center gap-2"
-            >
-              Checkout Now <MdOutlineShoppingCartCheckout size={20} />
-            </Link>
+            {cartItems?.length ? (
+              <Link
+                href="/store/checkout"
+                className="px-5 py-1.5 w-full bg-gray-800 hover:bg-opacity-90 text-white uppercase rounded text-center flex items-center justify-center gap-2"
+              >
+                Checkout Now <MdOutlineShoppingCartCheckout size={20} />
+              </Link>
+            ) : (
+              <button
+                disabled
+                className="px-5 cursor-not-allowed py-1.5 w-full bg-gray-800 hover:bg-opacity-90 text-white uppercase rounded text-center flex items-center justify-center gap-2"
+              >
+                Checkout Now <MdOutlineShoppingCartCheckout size={20} />
+              </button>
+            )}
           </div>
         </div>
       )}

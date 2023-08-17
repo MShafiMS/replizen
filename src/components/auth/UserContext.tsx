@@ -94,6 +94,8 @@ export function UserContextProvider(
         } else {
           setAuthState("unauthenticated");
           refetch();
+          setCurrentUser(undefined);
+          setCartItems([]);
         }
       });
     };
@@ -114,10 +116,10 @@ export function UserContextProvider(
         setCartItems(cartProducts);
       }
     };
-    if (user) {
+    if (user && currentUser) {
       fetchCartProducts();
     }
-  }, [user]);
+  }, [user, currentUser]);
 
   useEffect(() => {
     const fetchCurrentUser = async () => {

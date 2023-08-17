@@ -49,7 +49,7 @@ const VerifyForm = ({ confirmationResult, phone, close }: IProps) => {
   }, [code]);
 
   return (
-    <div className="w-full flex flex-col items-start justify-center h-full">
+    <div className="w-full flex flex-col lg:items-start items-center justify-center h-full">
       <button onClick={close} className="mb-6 text-2xl">
         <MdOutlineKeyboardBackspace />
       </button>
